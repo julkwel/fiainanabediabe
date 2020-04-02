@@ -1,0 +1,98 @@
+import {
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonItem,
+    IonMenuButton,
+    IonModal,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    useIonViewWillEnter
+} from '@ionic/react';
+import React, {useState} from 'react';
+import {RouteComponentProps, useHistory} from 'react-router';
+import Fiainana from '../components/Fiainana';
+import './Page.css';
+import Default from "../components/Default";
+import {Plugins} from "@capacitor/core";
+
+const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
+    const {Storage} = Plugins;
+    const [user, setUser] = useState();
+    const [showModal, setShowModal] = useState(false);
+    const history = useHistory();
+
+    if (match.params.name === 'anarana') {
+        Storage.remove({key: 'fiainanabediabe_user'}).then(() => getUser());
+    }
+
+    const handleUser = () => {
+        if (!user) {
+            setShowModal(true);
+        } else {
+            Storage.set({
+                key: 'fiainanabediabe_user',
+                value: user
+            }).then(() => {
+                history.push('/page/fiainana');
+
+                setShowModal(false);
+            })
+        }
+    };
+
+    const getUser = () => {
+        Storage.get({key: 'fiainanabediabe_user'}).then(res => {
+            if (!res.value) {
+                setShowModal(true);
+            } else {
+                setUser(res.value);
+            }
+        });
+    };
+
+    useIonViewWillEnter(() => {
+        getUser();
+    });
+
+    return (
+        <IonPage>
+            <IonHeader>
+                <IonToolbar color={"danger"}>
+                    <IonButtons slot="start">
+                        <IonMenuButton/>
+                    </IonButtons>
+                    <IonTitle>{match.params.name.toUpperCase() === 'FIAINANA' ? 'FIAINANABDB' : match.params.name.toUpperCase()}</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent>
+                {
+                    match.params.name === 'fiainana' ?
+                        <Fiainana name={match.params.name} user={user}/>
+                        : <Default name={match.params.name}/>
+                }
+
+                <IonModal
+                    mode={"ios"}
+                    isOpen={showModal}
+                >
+                    <h2 className={"text-center"}>Tonga soa !</h2>
+                    <IonItem>
+                        <IonInput required
+                                  placeholder={"Ampidiro ny anaranao *"}
+                                  onIonChange={(e: any) => {
+                                      setUser(e.target.value);
+                                  }} type={"text"}/>
+                    </IonItem>
+                    <IonButton fill={"clear"} size={"small"} onClick={() => handleUser()}>Hanova anarana</IonButton>
+                </IonModal>
+
+            </IonContent>
+        </IonPage>
+    );
+};
+
+export default Page;

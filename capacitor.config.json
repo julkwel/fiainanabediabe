@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "fiainanabediabe",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
