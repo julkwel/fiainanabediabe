@@ -92,7 +92,7 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                                   onIonChange={(e: any) => setUser(e.target.value)} type={"text"}/>
                     </IonItem>
                     <IonButton fill={"clear"} size={"small"} onClick={(e: any) => handleUser(e)}>
-                        Hanova anarana
+                        Hisoratra anarana
                     </IonButton>
                 </IonModal>
 
