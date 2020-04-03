@@ -12,7 +12,6 @@ import {
     IonList, IonModal
 } from "@ionic/react";
 import image from '../assets/bg-menu.jpg';
-import logo from '../assets/logo.png';
 import Img from "react-image";
 
 
@@ -52,7 +51,7 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
     }, []);
 
     return (
-        <IonCard mode={"ios"} style={{height: "80vh", overflow: "hidden"}}>
+        <IonCard mode={"md"} style={{height: "80vh", overflow: "hidden"}}>
             <div style={{overflowY: "scroll", height: "100%"}}>
                 <IonList lines={"full"}>
                     {
@@ -60,8 +59,7 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                             return (
                                 <IonItem key={key}>
                                     <IonAvatar slot={"start"}>
-                                        <Img
-                                            unloader={<IonImg src={logo} alt={"Fiainana be dia be"}/>}
+                                        <IonImg
                                             src={item.image}
                                             alt="Fiainana BDB"/>
                                     </IonAvatar>
@@ -89,7 +87,7 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
             </div>
 
             <IonModal
-                mode={"ios"}
+                mode={"md"}
                 swipeToClose={true}
                 isOpen={showModal}
             >

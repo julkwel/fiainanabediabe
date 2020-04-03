@@ -12,12 +12,8 @@ import {
     IonSlide,
     IonSlides
 } from "@ionic/react";
-import {heartCircle, heartOutline} from "ionicons/icons";
+import {bookOutline, heartCircle, heartOutline} from "ionicons/icons";
 import {Plugins} from "@capacitor/core";
-import logo from "../assets/logo.png";
-import background from "../assets/bg-menu.jpg";
-import Img from 'react-image';
-
 interface ContainerProps {
     name: string,
     user: string
@@ -112,7 +108,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
 
     return (
         <>
-            <IonSlides mode={"ios"}
+            <IonSlides mode={"md"}
                        pager={false}
                        options={slideOpts}>
                 {
@@ -129,8 +125,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                                 key={key}
                             >
                                 <IonCard>
-                                    <Img
-                                        unloader={<IonImg src={background} alt={"Fiainana be dia be"}/>}
+                                    <IonImg
                                         style={{width: "100%", height: "40vh"}}
                                         src={item.image}
                                         alt="Fiainana BDB"/>
@@ -152,9 +147,8 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                 swipeToClose={true}
                 isOpen={showModal}
             >
-                <IonImg src={currentPhoto}/>
-                <Img
-                    unloader={<IonImg src={background} alt={"Fiainana be dia be"}/>}
+                <img
+                    style={{width: "100%", height: "40vh"}}
                     src={currentPhoto}
                     alt="Fiainana BDB"/>
                 <IonCardHeader>
@@ -169,7 +163,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                 <IonButton fill={"clear"} size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
             </IonModal>
 
-            <IonCard mode={"ios"} style={{marginTop: "0px", height: "40vh", overflow: "hidden"}}>
+            <IonCard mode={"md"} style={{marginTop: "0px", height: "50vh", overflow: "hidden"}}>
                 <div style={{overflowY: "scroll", height: "100%"}}>
                     <IonList>
                         {
@@ -177,10 +171,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                                 return (
                                     <IonItem key={key}>
                                         <IonAvatar slot={"start"}>
-                                            <Img
-                                                unloader={<IonImg src={logo} alt={"Fiainana be dia be"}/>}
-                                                src={item.image}
-                                                alt="Fiainana BDB"/>
+                                            <IonIcon icon={bookOutline}/>
                                         </IonAvatar>
                                         <IonLabel
                                             onClick={() => {
@@ -200,7 +191,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                                         </IonLabel>
                                         <IonAvatar onClick={() => addToFavorite(item)} slot={"end"}>
                                             <IonIcon
-                                                {...(myFavoritesId.includes(item.id) ? {color:"danger"} : '')}
+                                                {...(myFavoritesId.includes(item.id) ? {color: "danger"} : '')}
                                                 icon={myFavoritesId.includes(item.id) ? heartCircle : heartOutline}/>
                                         </IonAvatar>
                                     </IonItem>
