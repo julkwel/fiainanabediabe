@@ -1,6 +1,6 @@
 {
   "appId": "com.fiainanabdb.io",
-  "appName": "Fiainanabediabe",
+  "appName": "fiainanabediabe",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",

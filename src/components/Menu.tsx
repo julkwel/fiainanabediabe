@@ -16,7 +16,7 @@ import {
   heartOutline,
   heartSharp, mailOpenOutline,
   mailOutline,
-  mailSharp, peopleCircleOutline,
+  mailSharp,
 } from 'ionicons/icons';
 import './Menu.css';
 
@@ -39,20 +39,8 @@ const appPages: AppPage[] = [
     mdIcon: mailSharp
   },
   {
-    title: 'Tosika',
-    url: '/page/tosika',
-    iosIcon: mailOpenOutline,
-    mdIcon: mailOpenOutline
-  },
-  {
-    title: 'Hanova anarana',
-    url: '/page/anarana',
-    iosIcon: peopleCircleOutline,
-    mdIcon: peopleCircleOutline
-  },
-  {
-    title: 'Favorites',
-    url: '/page/favorites',
+    title: 'Ireo teny tiako',
+    url: '/page/tiako',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   },
@@ -70,8 +58,10 @@ const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage }) => {
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>FIAINANABDB</IonListHeader>
-          <IonNote>fiainanabediabe@gmail.com</IonNote>
+          <div className="div">
+            <IonListHeader>FIAINANABDB</IonListHeader>
+            <IonNote>fiainanabediabe@gmail.com</IonNote>
+          </div>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>

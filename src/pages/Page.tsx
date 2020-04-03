@@ -18,6 +18,8 @@ import Fiainana from '../components/Fiainana';
 import './Page.css';
 import Default from "../components/Default";
 import {Plugins} from "@capacitor/core";
+import Favorites from "../components/Favorites";
+import Fiainanabediabe from "../components/Fiainanabediabe";
 
 const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
     const {Storage} = Plugins;
@@ -25,7 +27,7 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
     const [showModal, setShowModal] = useState(false);
     const history = useHistory();
 
-    const handleUser = (evt:any) => {
+    const handleUser = (evt: any) => {
         if (!user) {
             evt.preventDefault();
             evt.stopPropagation();
@@ -64,14 +66,19 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                     <IonButtons slot="start">
                         <IonMenuButton/>
                     </IonButtons>
-                    <IonTitle>{match.params.name.toUpperCase() === 'FIAINANA' ? 'FIAINANABDB' : match.params.name.toUpperCase()}</IonTitle>
+                    <IonTitle>{(match.params.name === 'fiainana' || match.params.name === 'apropos') ? 'FIAINANABDB' : match.params.name.toUpperCase()}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
                 {
                     match.params.name === 'fiainana' ?
                         <Fiainana name={match.params.name} user={user}/>
-                        : <Default name={match.params.name}/>
+                        :
+                        match.params.name === 'tiako' ?
+                            <Favorites name={match.params.name} user={user}/> :
+                            match.params.name === 'apropos' ?
+                                <Fiainanabediabe/> :
+                                <Default name={match.params.name}/>
                 }
 
                 <IonModal
@@ -82,11 +89,11 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                     <IonItem>
                         <IonInput required
                                   placeholder={"Ampidiro ny anaranao *"}
-                                  onIonChange={(e: any) => {
-                                      setUser(e.target.value);
-                                  }} type={"text"}/>
+                                  onIonChange={(e: any) => setUser(e.target.value)} type={"text"}/>
                     </IonItem>
-                    <IonButton fill={"clear"} size={"small"} onClick={(e:any) => handleUser(e)}>Hanova anarana</IonButton>
+                    <IonButton fill={"clear"} size={"small"} onClick={(e: any) => handleUser(e)}>
+                        Hanova anarana
+                    </IonButton>
                 </IonModal>
 
             </IonContent>
