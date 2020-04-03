@@ -1,4 +1,4 @@
-# fiainanabediabe
+# Fiainanabediabe
 
 Mobile app to share one bible verse every day 
 
