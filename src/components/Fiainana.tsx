@@ -36,7 +36,6 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
     const slideOpts = {
         slidesPerView: 1,
         grabCursor: true,
-        pager: true,
         cubeEffect: {
             shadow: true,
             slideShadows: true,
@@ -55,7 +54,9 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
 
     return (
         <>
-            <IonSlides mode={"ios"} pager={false} options={slideOpts}>
+            <IonSlides mode={"ios"}
+                       pager={false}
+                       options={slideOpts}>
                 {
                     fiainanas.map((item: any, key: any) => {
                         return (

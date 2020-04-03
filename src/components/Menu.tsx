@@ -40,7 +40,7 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Tosika',
-    url: '/page/Outbox',
+    url: '/page/tosika',
     iosIcon: mailOpenOutline,
     mdIcon: mailOpenOutline
   },
@@ -52,13 +52,13 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Favorites',
-    url: '/page/Favorites',
+    url: '/page/favorites',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   },
   {
     title: 'Fiainana be dia be',
-    url: '/page/Archived',
+    url: '/page/apropos',
     iosIcon: bookmarkOutline,
     mdIcon: bookmarkOutline
   },
@@ -75,7 +75,7 @@ const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage }) => {
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={selectedPage === appPage.title ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
+                <IonItem routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
                   <IonIcon slot="start" icon={appPage.iosIcon} />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>

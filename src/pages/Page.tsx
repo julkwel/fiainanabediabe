@@ -10,7 +10,7 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    useIonViewWillEnter
+    useIonViewWillEnter,
 } from '@ionic/react';
 import React, {useState} from 'react';
 import {RouteComponentProps, useHistory} from 'react-router';
@@ -25,12 +25,11 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
     const [showModal, setShowModal] = useState(false);
     const history = useHistory();
 
-    if (match.params.name === 'anarana') {
-        Storage.remove({key: 'fiainanabediabe_user'}).then(() => getUser());
-    }
-
-    const handleUser = () => {
+    const handleUser = (evt:any) => {
         if (!user) {
+            evt.preventDefault();
+            evt.stopPropagation();
+
             setShowModal(true);
         } else {
             Storage.set({
@@ -87,7 +86,7 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                                       setUser(e.target.value);
                                   }} type={"text"}/>
                     </IonItem>
-                    <IonButton fill={"clear"} size={"small"} onClick={() => handleUser()}>Hanova anarana</IonButton>
+                    <IonButton fill={"clear"} size={"small"} onClick={(e:any) => handleUser(e)}>Hanova anarana</IonButton>
                 </IonModal>
 
             </IonContent>

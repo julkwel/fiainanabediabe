@@ -1,9 +1,9 @@
 import Menu from './components/Menu';
 import Page from './pages/Page';
-import React, { useState } from 'react';
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
+import React, {useState} from 'react';
+import {IonApp, IonRouterOutlet, IonSplitPane} from '@ionic/react';
+import {IonReactRouter} from '@ionic/react-router';
+import {Redirect, Route} from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,25 +25,23 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 const App: React.FC = () => {
+    const [selectedPage] = useState('');
 
-  const [selectedPage, setSelectedPage] = useState('');
-
-  return (
-    <IonApp>
-      <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <Menu selectedPage={selectedPage} />
-          <IonRouterOutlet id="main">
-            <Route path="/page/:name" render={(props) => {
-              setSelectedPage(props.match.params.name);
-              return <Page {...props} />;
-            }} exact={true} />
-            <Route path="/" render={() => <Redirect to="/page/fiainana" />} exact={true} />
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </IonReactRouter>
-    </IonApp>
-  );
+    return (
+        <IonApp>
+            <IonReactRouter>
+                <IonSplitPane contentId="main">
+                    <Menu selectedPage={selectedPage}/>
+                    <IonRouterOutlet id="main">
+                        <Route path="/page/:name" render={(props) => {
+                            return <Page {...props} />
+                        }} exact={true}/>
+                        <Route path="/" render={() => <Redirect to="/page/fiainana"/>} exact={true}/>
+                    </IonRouterOutlet>
+                </IonSplitPane>
+            </IonReactRouter>
+        </IonApp>
+    );
 };
 
 export default App;
