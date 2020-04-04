@@ -5,15 +5,14 @@ import {
     IonCard,
     IonCardContent,
     IonCardHeader,
-    IonChip,
+    IonChip, IonIcon,
     IonImg,
     IonItem,
     IonLabel,
     IonList, IonModal
 } from "@ionic/react";
-import image from '../assets/bg-menu.jpg';
-import Img from "react-image";
-
+import {heartCircleOutline} from "ionicons/icons";
+import backgroundFallBack from "../assets/bg-menu.jpg";
 
 interface ContainerProps {
     name: string,
@@ -33,7 +32,6 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
     const [myFavorites, setMyFavorites] = useState<any>([]);
     const [showModal, setShowModal] = useState(false);
 
-
     const [currentDesc, setCurrentDesc] = useState('');
     const [currentDate, setCurrentDate] = useState('');
     const [currentPhoto, setCurrentPhoto] = useState('');
@@ -51,7 +49,7 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
     }, []);
 
     return (
-        <IonCard mode={"md"} style={{height: "80vh", overflow: "hidden"}}>
+        <IonCard mode={"ios"} style={{height: "80vh", overflow: "hidden"}}>
             <div style={{overflowY: "scroll", height: "100%"}}>
                 <IonList lines={"full"}>
                     {
@@ -59,9 +57,8 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                             return (
                                 <IonItem key={key}>
                                     <IonAvatar slot={"start"}>
-                                        <IonImg
-                                            src={item.image}
-                                            alt="Fiainana BDB"/>
+                                        <IonIcon color={"danger"} icon={heartCircleOutline} size={"large"}/>
+                                        <span style={{fontSize:"6px"}}>{item.datepublication}</span>
                                     </IonAvatar>
                                     <IonLabel
                                         onClick={() => {
@@ -73,10 +70,10 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                                         }}
                                     >
                                         <h3 className={"ion-text-wrap"}>
-                                            {item.title.replace('zanaku', user).slice(0, 20)} ...
+                                            {item.title.replace('zanaku', user ? user : 'zanako').slice(0, 20)} ...
                                         </h3>
                                         <p className={"ion-text-wrap"}>
-                                            {item.description.replace('zanaku', user).slice(0, 50)} ...
+                                            {item.description.replace('zanaku', user ? user : 'zanako').slice(0, 50)} ...
                                         </p>
                                     </IonLabel>
                                 </IonItem>
@@ -91,18 +88,20 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                 swipeToClose={true}
                 isOpen={showModal}
             >
-                <Img
-                    unloader={<IonImg src={image} alt={"Fiainana be dia be"}/>}
+                <IonImg
+                    onIonError={(e: any) => {
+                        e.target.src = backgroundFallBack;
+                    }}
                     src={currentPhoto}
                     alt="Fiainana BDB"/>
                 <IonCardHeader>
-                    <h6>{currentTitle.replace('zanaku', user)}</h6>
+                    <h6>{currentTitle.replace('zanaku', user ? user : 'zanako')}</h6>
                     <IonChip color="secondary">
                         <span style={{fontSize: "10px"}}>{currentDate}</span>
                     </IonChip>
                 </IonCardHeader>
                 <IonCardContent style={{textAlign: "justify", overflowY: "scroll"}}>
-                    <p>{currentDesc.replace('zanaku', user)}</p>
+                    <p>{currentDesc.replace('zanaku', user ? user : 'zanako')}</p>
                 </IonCardContent>
                 <IonButton fill={"clear"} size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
             </IonModal>

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './fiainana.css';
 import Axios from 'axios';
 import HTTP_BASE_URL from "../constant/BaseUrlConstant";
+
 import {
     IonAvatar,
     IonButton,
@@ -12,8 +13,11 @@ import {
     IonSlide,
     IonSlides
 } from "@ionic/react";
+
 import {bookOutline, heartCircle, heartOutline} from "ionicons/icons";
 import {Plugins} from "@capacitor/core";
+import backgroundFallBack from "../assets/bg-menu.jpg";
+
 interface ContainerProps {
     name: string,
     user: string
@@ -126,6 +130,9 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                             >
                                 <IonCard>
                                     <IonImg
+                                        onIonError={(e: any) => {
+                                            e.target.src = backgroundFallBack;
+                                        }}
                                         style={{width: "100%", height: "40vh"}}
                                         src={item.image}
                                         alt="Fiainana BDB"/>
@@ -147,7 +154,10 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                 swipeToClose={true}
                 isOpen={showModal}
             >
-                <img
+                <IonImg
+                    onIonError={(e: any) => {
+                        e.target.src = backgroundFallBack;
+                    }}
                     style={{width: "100%", height: "40vh"}}
                     src={currentPhoto}
                     alt="Fiainana BDB"/>
@@ -170,8 +180,16 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                             fiainanas.map((item: any, key: any) => {
                                 return (
                                     <IonItem key={key}>
-                                        <IonAvatar slot={"start"}>
-                                            <IonIcon icon={bookOutline}/>
+                                        <IonAvatar
+                                            onClick={() => {
+                                                setCurrentDesc(item.description);
+                                                setCurrentTitle(item.title);
+                                                setCurrentPhoto(item.image);
+                                                setCurrentDate(item.datepublication);
+                                                setShowModal(true);
+                                            }} slot={"start"}>
+                                            <IonIcon size={"large"} icon={bookOutline}/>
+                                            <span style={{fontSize:"6px"}}>{item.datepublication}</span>
                                         </IonAvatar>
                                         <IonLabel
                                             onClick={() => {
@@ -180,17 +198,17 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                                                 setCurrentPhoto(item.image);
                                                 setCurrentDate(item.datepublication);
                                                 setShowModal(true);
-                                            }}
-                                        >
+                                            }}>
                                             <h3 className={"ion-text-wrap"}>
-                                                {item.title.replace('zanaku', user).slice(0, 20)} ...
+                                                {item.title.replace('zanaku', user ? user : 'zanako').slice(0, 20)} ...
                                             </h3>
                                             <p className={"ion-text-wrap"}>
-                                                {item.description.replace('zanaku', user).slice(0, 50)} ...
+                                                {item.description.replace('zanaku', user ? user : 'zanako').slice(0, 50)} ...
                                             </p>
                                         </IonLabel>
                                         <IonAvatar onClick={() => addToFavorite(item)} slot={"end"}>
                                             <IonIcon
+                                                size={"large"}
                                                 {...(myFavoritesId.includes(item.id) ? {color: "danger"} : '')}
                                                 icon={myFavoritesId.includes(item.id) ? heartCircle : heartOutline}/>
                                         </IonAvatar>
