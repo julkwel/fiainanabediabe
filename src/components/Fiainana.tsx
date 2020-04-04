@@ -85,6 +85,10 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
 
                 setMyFavoritesId(storeId);
             }
+
+            setShowLoading(false);
+        }).catch(() => {
+            setShowLoading(false);
         });
     };
 
@@ -97,7 +101,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                 Storage.set({
                     key: 'fiainana_current_data',
                     value: JSON.stringify(res.data)
-                }).then(() => setShowLoading(false))
+                }).then();
             }
 
             getMyFavoritesId();
@@ -144,13 +148,14 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
             </IonSlides>
 
             <IonLoading
+                mode={"md"}
                 isOpen={showLoading}
                 onDidDismiss={() => setShowLoading(false)}
-                message={'Mahandrasa kely ...'}
+                message={'Mahandrasa kely azafady ...'}
             />
 
             <IonModal
-                mode={"ios"}
+                mode={"md"}
                 swipeToClose={true}
                 isOpen={showModal}
             >
@@ -162,13 +167,13 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                     src={currentPhoto}
                     alt="Fiainana BDB"/>
                 <IonCardHeader>
-                    <h6>{currentTitle.replace('zanaku', user)}</h6>
+                    <h6>{currentTitle.replace('zanaku', user ? user : 'zanako')}</h6>
                     <IonChip color="secondary">
                         <span style={{fontSize: "10px"}}>{currentDate}</span>
                     </IonChip>
                 </IonCardHeader>
                 <IonCardContent style={{textAlign: "justify", overflowY: "scroll"}}>
-                    <p>{currentDesc.replace('zanaku', user)}</p>
+                    <p>{currentDesc.replace('zanaku', user ? user : 'zanako')}</p>
                 </IonCardContent>
                 <IonButton fill={"clear"} size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
             </IonModal>
@@ -189,7 +194,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                                                 setShowModal(true);
                                             }} slot={"start"}>
                                             <IonIcon size={"large"} icon={bookOutline}/>
-                                            <span style={{fontSize:"6px"}}>{item.datepublication}</span>
+                                            <span style={{fontSize: "6px"}}>{item.datepublication}</span>
                                         </IonAvatar>
                                         <IonLabel
                                             onClick={() => {
