@@ -28,6 +28,7 @@ interface ContainerProps {
  * @constructor
  */
 const Favorites: React.FC<ContainerProps> = ({name, user}) => {
+    const pattern = /zanaku/gi;
     const {Storage} = Plugins;
     const [myFavorites, setMyFavorites] = useState<any>([]);
     const [showModal, setShowModal] = useState(false);
@@ -49,7 +50,7 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
     }, []);
 
     return (
-        <IonCard mode={"ios"} style={{height: "80vh", overflow: "hidden"}}>
+        <div>
             <div style={{overflowY: "scroll", height: "100%"}}>
                 <IonList lines={"full"}>
                     {
@@ -58,7 +59,7 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                                 <IonItem key={key}>
                                     <IonAvatar slot={"start"}>
                                         <IonIcon color={"danger"} icon={heartCircleOutline} size={"large"}/>
-                                        <span style={{fontSize:"6px"}}>{item.datepublication}</span>
+                                        <span style={{fontSize:"6px",display:"flex"}}>{item.datepublication}</span>
                                     </IonAvatar>
                                     <IonLabel
                                         onClick={() => {
@@ -70,10 +71,10 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                                         }}
                                     >
                                         <h3 className={"ion-text-wrap"}>
-                                            {item.title.replace('zanaku', user ? user : 'zanako').slice(0, 20)} ...
+                                            {item.title.replace(pattern, user ? user : 'zanako').slice(0, 20)} ...
                                         </h3>
                                         <p className={"ion-text-wrap"}>
-                                            {item.description.replace('zanaku', user ? user : 'zanako').slice(0, 50)} ...
+                                            {item.description.replace(pattern, user ? user : 'zanako').slice(0, 50)} ...
                                         </p>
                                     </IonLabel>
                                 </IonItem>
@@ -88,26 +89,26 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                 swipeToClose={true}
                 isOpen={showModal}
             >
-               <div style={{overflowY:"scroll"}}>
-                   <IonImg
-                       onIonError={(e: any) => {
-                           e.target.src = backgroundFallBack;
-                       }}
-                       src={currentPhoto}
-                       alt="Fiainana BDB"/>
-                   <IonCardHeader>
-                       <h6>{currentTitle.replace('zanaku', user ? user : 'zanako')}</h6>
-                       <IonChip color="secondary">
-                           <span style={{fontSize: "10px"}}>{currentDate}</span>
-                       </IonChip>
-                   </IonCardHeader>
-                   <IonCardContent style={{textAlign: "justify", overflowY: "scroll"}}>
-                       <p>{currentDesc.replace('zanaku', user ? user : 'zanako')}</p>
-                   </IonCardContent>
-               </div>
+                <div style={{overflowY:"scroll"}}>
+                    <IonImg
+                        onIonError={(e: any) => {
+                            e.target.src = backgroundFallBack;
+                        }}
+                        src={currentPhoto}
+                        alt="Fiainana BDB"/>
+                    <IonCardHeader>
+                        <h6>{currentTitle.replace(pattern, user ? user : 'zanako')}</h6>
+                        <IonChip color="secondary">
+                            <span style={{fontSize: "10px"}}>{currentDate}</span>
+                        </IonChip>
+                    </IonCardHeader>
+                    <IonCardContent style={{textAlign: "justify", overflowY: "scroll"}}>
+                        <p>{currentDesc.replace(pattern, user ? user : 'zanako')}</p>
+                    </IonCardContent>
+                </div>
                 <IonButton fill={"clear"} size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
             </IonModal>
-        </IonCard>
+        </div>
     )
 };
 

@@ -20,6 +20,7 @@ import Default from "../components/Default";
 import {Plugins} from "@capacitor/core";
 import Favorites from "../components/Favorites";
 import Fiainanabediabe from "../components/Fiainanabediabe";
+import Tosika from "../components/Tosika";
 
 const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
     const {Storage} = Plugins;
@@ -85,7 +86,9 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                             <Favorites name={match.params.name} user={user}/> :
                             isHasUser && match.params.name === 'apropos' ?
                                 <Fiainanabediabe/> :
-                                <Default name={match.params.name}/>
+                                isHasUser && match.params.name === 'tosika' ?
+                                    <Tosika/> :
+                                    <Default name={match.params.name}/>
                 }
 
                 <IonModal

@@ -14,9 +14,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {
   bookmarkOutline,
   heartOutline,
-  heartSharp, listSharp,
-  mailOutline,
-  mailSharp,
+  heartSharp, listSharp, partlySunnyOutline,
 } from 'ionicons/icons';
 import './Menu.css';
 
@@ -37,6 +35,12 @@ const appPages: AppPage[] = [
     url: '/page/fiainana',
     iosIcon: listSharp,
     mdIcon: listSharp
+  },
+  {
+    title: 'Tosika',
+    url: '/page/tosika',
+    iosIcon: partlySunnyOutline,
+    mdIcon: partlySunnyOutline
   },
   {
     title: 'Ireo teny tiako',

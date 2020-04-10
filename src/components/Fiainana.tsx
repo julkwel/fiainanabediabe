@@ -8,8 +8,15 @@ import {
     IonButton,
     IonCard,
     IonCardContent,
-    IonCardHeader, IonChip, IonIcon,
-    IonImg, IonItem, IonLabel, IonList, IonLoading, IonModal,
+    IonCardHeader,
+    IonChip,
+    IonIcon,
+    IonImg,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonLoading,
+    IonModal,
     IonSlide,
     IonSlides
 } from "@ionic/react";
@@ -169,53 +176,50 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                 </div>
                 <IonButton size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
             </IonModal>
-
-            <IonCard mode={"md"} style={{marginTop: "0px", height: "50vh", overflow: "hidden"}}>
-                <div style={{overflowY: "scroll", height: "100%"}}>
-                    <IonList>
-                        {
-                            fiainanas.map((item: any, key: any) => {
-                                return (
-                                    <IonItem key={key}>
-                                        <IonAvatar
-                                            onClick={() => {
-                                                setCurrentDesc(item.description);
-                                                setCurrentTitle(item.title);
-                                                setCurrentPhoto(item.image);
-                                                setCurrentDate(item.datepublication);
-                                                setShowModal(true);
-                                            }} slot={"start"}>
-                                            <IonIcon size={"large"} icon={bookOutline}/>
-                                            <span style={{fontSize: "6px",display:"flex"}}>{item.datepublication}</span>
-                                        </IonAvatar>
-                                        <IonLabel
-                                            onClick={() => {
-                                                setCurrentDesc(item.description);
-                                                setCurrentTitle(item.title);
-                                                setCurrentPhoto(item.image);
-                                                setCurrentDate(item.datepublication);
-                                                setShowModal(true);
-                                            }}>
-                                            <h3 className={"ion-text-wrap"}>
-                                                {item.title.replace(pattern, user ? user : 'zanako').slice(0, 20)} ...
-                                            </h3>
-                                            <p className={"ion-text-wrap"}>
-                                                {item.description.replace(pattern, user ? user : 'zanako').slice(0, 50)} ...
-                                            </p>
-                                        </IonLabel>
-                                        <IonAvatar onClick={() => addToFavorite(item)} slot={"end"}>
-                                            <IonIcon
-                                                size={"large"}
-                                                {...(myFavoritesId.includes(item.id) ? {color: "danger"} : '')}
-                                                icon={myFavoritesId.includes(item.id) ? heartCircle : heartOutline}/>
-                                        </IonAvatar>
-                                    </IonItem>
-                                )
-                            })
-                        }
-                    </IonList>
-                </div>
-            </IonCard>
+            <div style={{overflowY: "scroll", height: "100%"}}>
+                <IonList>
+                    {
+                        fiainanas.map((item: any, key: any) => {
+                            return (
+                                <IonItem key={key}>
+                                    <IonAvatar
+                                        onClick={() => {
+                                            setCurrentDesc(item.description);
+                                            setCurrentTitle(item.title);
+                                            setCurrentPhoto(item.image);
+                                            setCurrentDate(item.datepublication);
+                                            setShowModal(true);
+                                        }} slot={"start"}>
+                                        <IonIcon size={"large"} icon={bookOutline}/>
+                                        <span style={{fontSize: "6px",display:"flex"}}>{item.datepublication}</span>
+                                    </IonAvatar>
+                                    <IonLabel
+                                        onClick={() => {
+                                            setCurrentDesc(item.description);
+                                            setCurrentTitle(item.title);
+                                            setCurrentPhoto(item.image);
+                                            setCurrentDate(item.datepublication);
+                                            setShowModal(true);
+                                        }}>
+                                        <h3 className={"ion-text-wrap"}>
+                                            {item.title.replace(pattern, user ? user : 'zanako').slice(0, 20)} ...
+                                        </h3>
+                                        <p className={"ion-text-wrap"}>
+                                            {item.description.replace(pattern, user ? user : 'zanako').slice(0, 50)} ...
+                                        </p>
+                                    </IonLabel>
+                                    <IonAvatar onClick={() => addToFavorite(item)} slot={"end"}>
+                                        <IonIcon
+                                            size={"large"}
+                                            {...(myFavoritesId.includes(item.id) ? {color: "danger"} : '')}
+                                            icon={myFavoritesId.includes(item.id) ? heartCircle : heartOutline}/>
+                                    </IonAvatar>
+                                </IonItem>
+                            )
+                        })
+                    }
+                </IonList>
+            </div>
         </>
     );
 };
