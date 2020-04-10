@@ -88,21 +88,23 @@ const Favorites: React.FC<ContainerProps> = ({name, user}) => {
                 swipeToClose={true}
                 isOpen={showModal}
             >
-                <IonImg
-                    onIonError={(e: any) => {
-                        e.target.src = backgroundFallBack;
-                    }}
-                    src={currentPhoto}
-                    alt="Fiainana BDB"/>
-                <IonCardHeader>
-                    <h6>{currentTitle.replace('zanaku', user ? user : 'zanako')}</h6>
-                    <IonChip color="secondary">
-                        <span style={{fontSize: "10px"}}>{currentDate}</span>
-                    </IonChip>
-                </IonCardHeader>
-                <IonCardContent style={{textAlign: "justify", overflowY: "scroll"}}>
-                    <p>{currentDesc.replace('zanaku', user ? user : 'zanako')}</p>
-                </IonCardContent>
+               <div style={{overflowY:"scroll"}}>
+                   <IonImg
+                       onIonError={(e: any) => {
+                           e.target.src = backgroundFallBack;
+                       }}
+                       src={currentPhoto}
+                       alt="Fiainana BDB"/>
+                   <IonCardHeader>
+                       <h6>{currentTitle.replace('zanaku', user ? user : 'zanako')}</h6>
+                       <IonChip color="secondary">
+                           <span style={{fontSize: "10px"}}>{currentDate}</span>
+                       </IonChip>
+                   </IonCardHeader>
+                   <IonCardContent style={{textAlign: "justify", overflowY: "scroll"}}>
+                       <p>{currentDesc.replace('zanaku', user ? user : 'zanako')}</p>
+                   </IonCardContent>
+               </div>
                 <IonButton fill={"clear"} size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
             </IonModal>
         </IonCard>

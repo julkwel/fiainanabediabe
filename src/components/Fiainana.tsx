@@ -32,8 +32,8 @@ interface ContainerProps {
  * @constructor
  */
 const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
+    const pattern = /zanaku/gi;
     const {Storage} = Plugins;
-
     const [myFavorites, setMyFavorites] = useState([]);
     const [myFavoritesId, setMyFavoritesId] = useState<any>([]);
     const [fiainanas, setFiainanas] = useState([]);
@@ -46,14 +46,8 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
     const [currentTitle, setCurrentTitle] = useState('');
 
     const slideOpts = {
-        slidesPerView: 1,
-        grabCursor: true,
-        cubeEffect: {
-            shadow: true,
-            slideShadows: true,
-            shadowOffset: 20,
-            shadowScale: 0.94,
-        }
+        initialSlide: 0,
+        speed: 400
     };
 
     const addToFavorite = (item: any) => {
@@ -66,12 +60,12 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
         }).then(() => getMyFavoritesId());
     };
 
-    const getMyFavorites = () => {
+    async function getMyFavorites() {
         Storage.get({key: 'fiainana_my_favorites'}).then((res: any) => {
             let storeData = JSON.parse(res.value);
             setMyFavorites(storeData ? storeData : [])
         });
-    };
+    }
 
     const getMyFavoritesId = () => {
         Storage.get({key: 'fiainana_my_favorites'}).then((res: any) => {
@@ -93,23 +87,20 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
     };
 
     useEffect(() => {
-        getMyFavorites();
-        Axios.get(HTTP_BASE_URL + '/teny/api/').then(res => {
-            if (res.data && res.data.length !== 0) {
-                setFiainanas(res.data);
+        getMyFavorites().then(() => {
+            Axios.get(HTTP_BASE_URL + '/teny/api/').then(res => {
+                if (res.data && res.data.length !== 0) {
+                    setFiainanas(res.data);
 
-                Storage.set({
-                    key: 'fiainana_current_data',
-                    value: JSON.stringify(res.data)
-                }).then();
-            }
-
-            getMyFavoritesId();
-        }).catch(() => {
-            Storage.get({key: 'fiainana_current_data'}).then((res: any) => {
-                setFiainanas(JSON.parse(res.value));
-
-                setShowLoading(false);
+                    Storage.set({
+                        key: 'fiainana_current_data',
+                        value: JSON.stringify(res.data)
+                    }).then(() => getMyFavoritesId());
+                }
+            }).catch(() => {
+                Storage.get({key: 'fiainana_current_data'}).then((res: any) => {
+                    setFiainanas(JSON.parse(res.value));
+                }).then(() => getMyFavoritesId());
             });
         });
     }, []);
@@ -159,23 +150,24 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                 swipeToClose={true}
                 isOpen={showModal}
             >
-                <IonImg
-                    onIonError={(e: any) => {
-                        e.target.src = backgroundFallBack;
-                    }}
-                    style={{width: "100%", height: "40vh"}}
-                    src={currentPhoto}
-                    alt="Fiainana BDB"/>
-                <IonCardHeader>
-                    <h6>{currentTitle.replace('zanaku', user ? user : 'zanako')}</h6>
-                    <IonChip color="secondary">
-                        <span style={{fontSize: "10px"}}>{currentDate}</span>
-                    </IonChip>
-                </IonCardHeader>
-                <IonCardContent style={{textAlign: "justify", overflowY: "scroll"}}>
-                    <p>{currentDesc.replace('zanaku', user ? user : 'zanako')}</p>
-                </IonCardContent>
-                <IonButton fill={"clear"} size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
+                <div style={{overflowY: "scroll"}}>
+                    <IonImg
+                        onIonError={(e: any) => {
+                            e.target.src = backgroundFallBack;
+                        }}
+                        src={currentPhoto}
+                        alt="Fiainana BDB"/>
+                    <IonCardHeader>
+                        <h6>{currentTitle.replace(pattern, user ? user : 'zanako')}</h6>
+                        <IonChip color="secondary">
+                            <span style={{fontSize: "10px"}}>{currentDate}</span>
+                        </IonChip>
+                    </IonCardHeader>
+                    <IonCardContent style={{textAlign: "justify"}}>
+                        <p>{currentDesc.replace(pattern, user ? user : 'zanako')}</p>
+                    </IonCardContent>
+                </div>
+                <IonButton size={"small"} onClick={() => setShowModal(false)}>Hidiana</IonButton>
             </IonModal>
 
             <IonCard mode={"md"} style={{marginTop: "0px", height: "50vh", overflow: "hidden"}}>
@@ -194,7 +186,7 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                                                 setShowModal(true);
                                             }} slot={"start"}>
                                             <IonIcon size={"large"} icon={bookOutline}/>
-                                            <span style={{fontSize: "6px"}}>{item.datepublication}</span>
+                                            <span style={{fontSize: "6px",display:"flex"}}>{item.datepublication}</span>
                                         </IonAvatar>
                                         <IonLabel
                                             onClick={() => {
@@ -205,10 +197,10 @@ const Fiainana: React.FC<ContainerProps> = ({name, user}) => {
                                                 setShowModal(true);
                                             }}>
                                             <h3 className={"ion-text-wrap"}>
-                                                {item.title.replace('zanaku', user ? user : 'zanako').slice(0, 20)} ...
+                                                {item.title.replace(pattern, user ? user : 'zanako').slice(0, 20)} ...
                                             </h3>
                                             <p className={"ion-text-wrap"}>
-                                                {item.description.replace('zanaku', user ? user : 'zanako').slice(0, 50)} ...
+                                                {item.description.replace(pattern, user ? user : 'zanako').slice(0, 50)} ...
                                             </p>
                                         </IonLabel>
                                         <IonAvatar onClick={() => addToFavorite(item)} slot={"end"}>

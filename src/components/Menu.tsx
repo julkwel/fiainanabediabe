@@ -14,7 +14,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import {
   bookmarkOutline,
   heartOutline,
-  heartSharp,
+  heartSharp, listSharp,
   mailOutline,
   mailSharp,
 } from 'ionicons/icons';
@@ -33,10 +33,10 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Fampaherezana',
+    title: 'Hafatra',
     url: '/page/fiainana',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    iosIcon: listSharp,
+    mdIcon: listSharp
   },
   {
     title: 'Ireo teny tiako',

@@ -24,6 +24,7 @@ import Fiainanabediabe from "../components/Fiainanabediabe";
 const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
     const {Storage} = Plugins;
     const [user, setUser] = useState();
+    const [isHasUser, setHasUser] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const history = useHistory();
 
@@ -41,6 +42,7 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                 history.push('/page/fiainana');
 
                 setShowModal(false);
+                setHasUser(true);
             })
         }
     };
@@ -51,8 +53,13 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                 setShowModal(true);
             } else {
                 setUser(res.value);
+                setHasUser(true);
             }
         });
+    };
+
+    const handleChange = (event: any) => {
+        setUser(event.target.value);
     };
 
     useIonViewWillEnter(() => {
@@ -71,12 +78,12 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
             </IonHeader>
             <IonContent>
                 {
-                    match.params.name === 'fiainana' ?
+                    isHasUser && match.params.name === 'fiainana' ?
                         <Fiainana name={match.params.name} user={user}/>
                         :
-                        match.params.name === 'tiako' ?
+                        isHasUser && match.params.name === 'tiako' ?
                             <Favorites name={match.params.name} user={user}/> :
-                            match.params.name === 'apropos' ?
+                            isHasUser && match.params.name === 'apropos' ?
                                 <Fiainanabediabe/> :
                                 <Default name={match.params.name}/>
                 }
@@ -88,10 +95,15 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({match}) => {
                     <h2 className={"text-center"}>Tonga soa !</h2>
                     <IonItem>
                         <IonInput required
+                                  defaultValue={user}
+                                  id={"nomVal"}
                                   placeholder={"Ampidiro ny anaranao *"}
-                                  onIonChange={(e: any) => setUser(e.target.value)} type={"text"}/>
+                                  onIonInput={(e: any) => handleChange(e)}
+                                  type={"text"}/>
                     </IonItem>
-                    <IonButton fill={"clear"} size={"small"} onClick={(e: any) => handleUser(e)}>
+                    <IonButton color={"primary"}
+                               size={"small"}
+                               onClick={(e: any) => handleUser(e)}>
                         Hisoratra anarana
                     </IonButton>
                 </IonModal>
